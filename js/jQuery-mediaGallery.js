@@ -5,10 +5,10 @@
             {
                 var galleryObj = e.data.galleryObj,
                     thisItem,
-                    controls =  typeof $(e.target).data('controls') !== 'undefined' ? true : false;
+                    controls =  typeof $(e.target).data("controls") !== "undefined" ? true : false;
 
                 if(controls){
-                    if($(e.target).data('controls'))
+                    if($(e.target).data("controls"))
                     {
                         thisItem = galleryObj.prev;
                         m.slideLeft(thisItem,galleryObj);
@@ -27,8 +27,8 @@
                 }
                 if(thisItem.get(0) !== galleryObj.center.thumb.get(0))
                 {
-                    galleryObj.center.thumb.removeClass('centered');
-                    galleryObj.center.thumb = thisItem.addClass('centered');
+                    galleryObj.center.thumb.removeClass("centered");
+                    galleryObj.center.thumb = thisItem.addClass("centered");
                     m.setCenter(galleryObj);
                 }
 
@@ -40,25 +40,25 @@
                     index = centerThumb.index(),
                     allObjects = galleryObj.center.main.children(),
                     mainObject = allObjects.eq(index),
-                    objectCaption = mainObject.data('caption'),
-                    videoContainer = $('.video-container');
+                    objectCaption = mainObject.data("caption"),
+                    videoContainer = $(s.galleryClasses.videoContainer);
 
-                if(videoContainer.children('iframe').length > 0) // if there are any videos in this gallery
+                if(videoContainer.children("iframe").length > 0) // if there are any videos in this gallery
                 {
-//                    videoContainer.children('div.youtube-after').fadeIn();
+//                    videoContainer.children("div.youtube-after").fadeIn();
 
-                    videoContainer.children('iframe').each(function(){
+                    videoContainer.children("iframe").each(function(){
                         var iframe = $(this);
-                        iframe.siblings('div.youtube-after').fadeIn();
-                        iframe.fadeOut('slow',function(){
+                        iframe.siblings("div."+ s.galleryClasses.youtubeAfter).fadeIn();
+                        iframe.fadeOut("slow",function(){
                             iframe.remove();
                         });
                     });
                 }
                 m.changeCaption(galleryObj, objectCaption);
 
-                allObjects.not(mainObject).fadeOut('slow');
-                mainObject.fadeIn('slow');
+                allObjects.not(mainObject).fadeOut("slow");
+                mainObject.fadeIn("slow");
 
                 galleryObj.next = m.getNextItem(galleryObj);
                 galleryObj.prev = m.getPrevItem(galleryObj);
@@ -67,7 +67,7 @@
             changeCaption : function(galleryObj, caption)
             {
                 var oldCaption = galleryObj.caption.children().fadeOut(),
-                    newCaption = $('<span>'+caption+'</span>');
+                    newCaption = $("<span>"+caption+"</span>");
 
                 newCaption.hide().appendTo(galleryObj.caption).fadeIn();
                 oldCaption.remove();
@@ -99,16 +99,16 @@
 
             addFunctions : function(galleryObj)
             {
-                galleryObj.thumbsList.on('click', {galleryObj : galleryObj}, m.slideToThis);
-                galleryObj.controls.left.on('click', {galleryObj : galleryObj}, m.slideToThis);
-                galleryObj.controls.right.on('click', {galleryObj : galleryObj}, m.slideToThis);
+                galleryObj.thumbsList.on("click", {galleryObj : galleryObj}, m.slideToThis);
+                galleryObj.controls.left.on("click", {galleryObj : galleryObj}, m.slideToThis);
+                galleryObj.controls.right.on("click", {galleryObj : galleryObj}, m.slideToThis);
             },
 
             removeFunctions : function(galleryObj)
             {
-                galleryObj.thumbsList.off('click');
-                galleryObj.controls.left.off('click');
-                galleryObj.controls.right.off('click');
+                galleryObj.thumbsList.off("click");
+                galleryObj.controls.left.off("click");
+                galleryObj.controls.right.off("click");
             },
 
             preload : function(galleryObj)
@@ -120,28 +120,28 @@
 
                 $(galleryObj.thumbsList).each(function()
                 {
-                    var src = $(this).children().data('src'),
-                        type = $(this).children().data('type'),
-                        caption = $(this).children().data('caption'),
+                    var src = $(this).children().data("src"),
+                        type = $(this).children().data("type"),
+                        caption = $(this).children().data("caption"),
                         element;
 
-                    if(type == 'youtube')
+                    if(type == "youtube")
                     {
                         var id = src,
-                            element = $('<div></div>').addClass('video-container').data('id',id).data('galleryObj',galleryObj).data('caption', caption)
+                            element = $("<div></div>").addClass(s.galleryClasses.videoContainer).data("id",id).data("galleryObj",galleryObj).data("caption", caption)
                                 .hide().appendTo(galleryObj.center.main).click(m.playVideo),
-                            preview = $('<img/>').appendTo(element),
+                            preview = $("<img/>").appendTo(element),
                             marginTop = (element.height() - 75) / 2,
                             marginLeft = (element.width() - 100) / 2;
 
 
-                        $('<div></div>').addClass('youtube-after').appendTo(element).css({top :marginTop+'px', left : marginLeft+'px'});
+                        $("<div></div>").addClass(s.galleryClasses.youtubeAfter).appendTo(element).css({top :marginTop+"px", left : marginLeft+"px"});
 
                         $.getJSON("http://gdata.youtube.com/feeds/api/videos/"+id+"?v=2&alt=jsonc&callback=?", function(json)
                         {
                             src = json.data.thumbnail.hqDefault;
 
-                            preview.attr('src', src);
+                            preview.attr("src", src);
 
                             if(first)
                             {
@@ -150,11 +150,11 @@
                             }
                         });
                     }
-                    else if(type == 'img')
+                    else if(type == "img")
                     {
-                        element = $('<div></div>').addClass('img-container').data('caption', caption).hide().appendTo(galleryObj.center.main);
+                        element = $("<div></div>").addClass(s.galleryClasses.imgContainer).data("caption", caption).hide().appendTo(galleryObj.center.main);
 
-                        var img = $('<img/>').attr('src', src).appendTo(element).load(m.resizeIMG);
+                        var img = $("<img/>").attr("src", src).appendTo(element).load(m.resizeIMG);
 
                         if(first)
                         {
@@ -167,7 +167,7 @@
 
             showSpinner : function(show, target, galleryObj)
             {
-                var galleryObj =  typeof galleryObj !== 'undefined' ? galleryObj : target.data('galleryObj');
+                var galleryObj =  typeof galleryObj !== "undefined" ? galleryObj : target.data("galleryObj");
 
                 if(show)
                 {
@@ -176,13 +176,13 @@
                         marginLeft = (placeholder.width() - 42) / 2;
 
                     galleryObj.spinner = new Object();
-                    galleryObj.spinner.item = $('<div class="spinner"></div>').css({top :marginTop+'px', left : marginLeft+'px'});
-                    galleryObj.spinner.wrapper = $('<div class="spinner-wrapper"></div>').append(galleryObj.spinner.item).hide().appendTo(placeholder).fadeIn('fast');
+                    galleryObj.spinner.item = $("<div class='"+ s.galleryClasses.spinner+"'></div>").css({top :marginTop+"px", left : marginLeft+"px"});
+                    galleryObj.spinner.wrapper = $("<div class='"+ s.galleryClasses.spinnerWrapper+"'></div>").append(galleryObj.spinner.item).hide().appendTo(placeholder).fadeIn("fast");
                 }
-                else if(typeof galleryObj.spinner !== 'undefined')
+                else if(typeof galleryObj.spinner !== "undefined")
                 {
                     galleryObj.spinner.wrapper.hide().remove();
-                    galleryObj.spinner.item.fadeOut('fast', function()
+                    galleryObj.spinner.item.fadeOut("fast", function()
                     {
                         $(this).remove();
                     });
@@ -208,7 +208,7 @@
                 if(objectOffset > visibleUntil)
                 {
                     var diff = objectOffset - visibleUntil;
-                    galleryObj.thumbsContainer.animate({'margin-left' : '-='+diff},'fast');
+                    galleryObj.thumbsContainer.animate({"margin-left" : "-="+diff},"fast");
                 }
 
             },
@@ -234,7 +234,7 @@
                 if(objectOffset < visibleUntil)
                 {
                     var diff = objectOffset - visibleUntil;
-                    galleryObj.thumbsContainer.animate({'margin-left' : '-='+diff},'fast');
+                    galleryObj.thumbsContainer.animate({"margin-left" : "-="+diff},"fast");
                 }
             },
 
@@ -242,8 +242,8 @@
             {
                 m.showSpinner(true, galleryObj.center.main, galleryObj);
                 $(window).load(function(){
-                    galleryObj.controls.wrapper.fadeIn('slow');
-                    galleryObj.thumbsList.fadeIn('slow');
+                    galleryObj.controls.wrapper.fadeIn("slow");
+                    galleryObj.thumbsList.fadeIn("slow");
                     m.showSpinner(false,galleryObj.center.main, galleryObj);
                     var MouseRelXpos = 0,
                         sumW = 0;
@@ -284,13 +284,13 @@
             playVideo : function(e)
             {
                 var container = $(this),
-                    iframe = $('<iframe type="text/html" src="https://www.youtube.com/embed/'+container.data('id')+'?autoplay=1&rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>');
+                    iframe = $("<iframe type='text/html' src='https://www.youtube.com/embed/"+container.data("id")+"?autoplay=1&rel=0&showinfo=0' frameborder='0' allowfullscreen></iframe>");
 
-                container.find('.youtube-after').hide();
+                container.find("."+ s.galleryClasses.youtubeAfter).hide();
                 m.showSpinner(true, container);
                 iframe.hide().appendTo(container).load(function(){
                     m.showSpinner(false, container);
-                    $(this).fadeIn('slow');
+                    $(this).fadeIn("slow");
                 })
             },
 
@@ -329,52 +329,68 @@
                         margin = (prntH - chldH)/2;
                     }
                 }
-                IMG.css('margin-top', margin + 'px');
+                IMG.css("margin-top", margin + "px");
             }
         };
     $.fn.mediaGallery = function(o){
         s = {
-            itemClass       : 'li',
-            galleryClass : 'gallery-wrapper',
-            centerClass : 'gallery-center',
-            mainItemClass : 'gallery-mainItem',
-            thumbsWrapperClass : 'gallery-thumbsWrapper',
-            captionClass : 'gallery-caption',
-            spinnerClass : 'spinner',
-            spinnerWrapperClass : 'spinner-wrapper',
-            contolsWrapperClass : 'gallery-controls',
-            contolsLeftClass : 'gallery-slideLeft',
-            contolsRightClass : 'gallery-slideRight',
-            contolsLeftTitle : 'Previous',
-            contolsRightTitle : 'Next',
+            galleryClasses :{
+                gallery : "gallery-wrapper",
+                center : "gallery-center",
+                mainItem : "gallery-mainItem",
+                videoContainer : "video-container",
+                imgContainer : "img-container",
+                youtubeAfter : "youtube-after",
+                thumbsWrapper : "gallery-thumbsWrapper",
+                item       : "li",
+                caption : "gallery-caption",
+                spinner : "spinner",
+                spinnerWrapper : "spinner-wrapper",
+                contolsWrapper : "gallery-controls",
+                contolsLeft : "gallery-slideLeft",
+                contolsRight : "gallery-slideRight"
+            },
+            translations : {
+                contolsLeft : "Previous",
+                contolsRight : "Next"
+            },
             strechIMG : true
         };
         if(o) $.extend(s, o);
 
         this.each(function(){
 
+            // Create the gallery object, to use in this plugin.
             var galleryObj = new Object(),
-                galleryMainView = $('<div class="'+ s.centerClass+'"></div>'),                               // Creates gallery's main view
-                galleryWrapper = $('<div class="'+ s.galleryClass+'"></div>').prepend(galleryMainView),      // Creates gallery's wrapper and prepends gallery's main view to it
-                thumbsWrapper = $('<div class="'+s.thumbsWrapperClass+'"></div>').appendTo(galleryWrapper),   // Creates gallery's thumb list wrapper and appends it gallery's wrapper
-                thumbsList = $(this).before(galleryWrapper).appendTo(thumbsWrapper);                         // Takes thumb list and inserts gallery wrapper before it, then appends thumb list to thumb wrapper
+                galleryMainView = $("<div class='"+ s.galleryClasses.center+"'></div>"), // Creates gallery's main view
+                galleryWrapper = $("<div class='"+ s.galleryClasses.gallery+"'></div>").prepend(galleryMainView), // Creates gallery's wrapper and prepends gallery's main view to it
+                thumbsWrapper = $("<div class='"+s.galleryClasses.thumbsWrapper+"'></div>").appendTo(galleryWrapper), // Creates gallery's thumb list wrapper and appends it gallery's wrapper
+                thumbsList = $(this).before(galleryWrapper).appendTo(thumbsWrapper); // Takes thumb list and inserts gallery wrapper before it, then appends thumb list to thumb wrapper
 
             galleryObj.thumbsWrapper = thumbsWrapper;
             galleryObj.thumbsContainer = thumbsList;
-            galleryObj.thumbsList = thumbsList.find(s.itemClass).hide();
 
-            galleryObj.caption = $('<div class="'+ s.captionClass+'">').insertAfter(galleryMainView);
+            // Get all thumbnails of this gallery
+            galleryObj.thumbsList = thumbsList.find(s.galleryClasses.item).hide();
+
+            // Add caption field to this gallery
+            galleryObj.caption = $("<div class='"+ s.galleryClasses.caption+"'>").insertAfter(galleryMainView);
 
 
+            // Create the main object container to display and append it to the main view
             galleryObj.center = new Object();
-            galleryObj.center.main = $('<div class="'+ s.mainItemClass+'">').prependTo(galleryMainView);
-            galleryObj.center.thumb = galleryObj.thumbsList.first().addClass('centered');
+            galleryObj.center.main = $("<div class='"+ s.galleryClasses.mainItem+"'>").prependTo(galleryMainView);
 
+            // Set the thumbnail that corresponds to the item being shown as the main item
+            galleryObj.center.thumb = galleryObj.thumbsList.first().addClass("centered");
+
+            // Create controls for this gallery
             galleryObj.controls = new Object();
-            galleryObj.controls.wrapper   = $('<div class="'+s.contolsWrapperClass+'"></div>').appendTo(galleryMainView).hide();
-            galleryObj.controls.left = $('<div class="'+s.contolsLeftClass+'" title="'+s.contolsLeftTitle+'"></div>').appendTo(galleryObj.controls.wrapper).data('controls',true);
-            galleryObj.controls.right = $('<div class="'+s.contolsRightClass+'" title="'+s.contolsRightTitle+'"></div>').appendTo(galleryObj.controls.wrapper).data('controls',false);
+            galleryObj.controls.wrapper   = $("<div class='"+s.galleryClasses.contolsWrapper+"'></div>").appendTo(galleryMainView).hide();
+            galleryObj.controls.left = $("<div class='"+s.galleryClasses.contolsLeft+"' title='"+s.translations.contolsLeft+"'></div>").appendTo(galleryObj.controls.wrapper).data("controls",true);
+            galleryObj.controls.right = $("<div class='"+s.galleryClasses.contolsRight+"' title='"+s.translations.contolsRight+"'></div>").appendTo(galleryObj.controls.wrapper).data("controls",false);
 
+            // Run initial functions to prepare this gallery for display
             m.preload(galleryObj);
             m.addFunctions(galleryObj);
             m.setCenter(galleryObj);
