@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Media Gallery Demo</title>
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="../js/jQuery-mediaGallery.js"></script>
+    <style>
+        body{
+            font-family: sans-serif;
+            width:900px;
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+<ul class="gallery-thumbs">
+    <li><img src="assets/kariminal_rider.jpg" data-type="img" data-src="assets/kariminal_rider.jpg" data-caption="Rider" alt="Rider" /></li>
+    <li><img src="assets/scottwills_gunpowder.jpg" data-type="img" data-src="assets/scottwills_gunpowder.jpg" data-caption="Gunpowder" alt="Gunpowder" /></li>
+    <li><img src="http://i1.ytimg.com/vi/F-L5bzwdpVI/default.jpg" data-type="youtube" data-src="F-L5bzwdpVI" data-caption="Turbo - Official Trailer #2 (HD) Ryan Reynolds" alt="Turbo - Official Trailer #2 (HD) Ryan Reynolds" /></li>
+    <li><img src="http://i1.ytimg.com/vi/YE7VzlLtp-4/default.jpg" data-type="youtube" data-src="YE7VzlLtp-4" data-caption="Big Buck Bunny" alt="Big Buck Bunny" /></li>
+    <li><img src="assets/scottwills_mill.jpg" data-type="img" data-src="assets/scottwills_mill.jpg" data-caption="Mill" alt="Mill" /></li>
+    <li><img src="assets/scottwills_mossytree.jpg" data-type="img" data-src="assets/scottwills_mossytree.jpg" data-caption="Mossy tree" alt="Mossy tree" /></li>
+    <li><img src="http://i1.ytimg.com/vi/oIlIVFBBbNw/default.jpg" data-type="youtube" data-src="oIlIVFBBbNw" data-caption="Pigeons - Cute animation cartoon" alt="Pigeons - Cute animation cartoon" /></li>
+    <li><img src="assets/scottwills_enchantedcreek.jpg" data-type="img" data-src="assets/scottwills_enchantedcreek.jpg" data-caption="Enchanted creek" alt="Enchanted creek" /></li>
+    <li><img src="http://i1.ytimg.com/vi/-a6Pe1ovKHg/default.jpg" data-type="youtube" data-src="-a6Pe1ovKHg" data-caption="Partly Cloudy" alt="Partly Cloudy" /></li>
+</ul>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".gallery-thumbs").mediaGallery();
+    });
+
+</script>
+</body>
+</html>
